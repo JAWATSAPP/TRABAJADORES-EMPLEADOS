@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Formulario de Empleados</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /* Fondo general */
+            body {
+                background: linear-gradient(135deg, #4a90e2, #1c1c1c);
+                font-family: Arial, sans-serif;
+                color: #ff9933;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            /* Contenedor del formulario */
+            form {
+                background: #99ccff;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+                padding: 20px 30px;
+                width: 400px;
+                text-align: center;
+
+            }
+
+            /* Título del formulario */
+            h1 {
+                font-size: 22px;
+                font-weight: bold;
+                color: #ffffff;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            /* Estilos de etiquetas y campos de entrada */
+            label {
+                display: block;
+                margin-top: 15px;
+                font-size: 14px;
+                text-align: left;
+                color: #330099;
+            }
+            input, select {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                margin: 5px 0;
+                box-sizing: border-box;
+                border: none;
+                border-radius: 5px;
+                background: #ffffff;
+                color: #006666;
+                font-size: 16px;
+                text-align: center; /* Centra el texto dentro de los campos */
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                border: none;
+                border-radius: 5px;
+                background: #ffffff;
+                color: #006666;
+                font-size: 14px;
+            }
+
+            input:focus {
+                outline: none;
+                box-shadow: 0 0 5px #4a90e2;
+            }
+
+            /* Botones */
+            button {
+                background: #4caf50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-top: 20px;
+                margin-right: 10px;
+            }
+
+            button:last-child {
+                background: #e74c3c;
+            }
+
+            button:hover {
+                opacity: 0.9;
+            }
+
+            /* Centrar botones */
+            .button-group {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .button-group button {
+                margin: 0 10px;
+            }
+         
+         
+            /* Para los mensajes de error */
+            p {
+                color: red;
+                text-align: left;
+                margin-top: 5px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form th:action="@{/empleados}" th:object="${empleado}" method="post">
+            <h1 th:text="${#strings.isEmpty(empleado.id) ? 'Nuevo Empleado' : 'Editar Empleado'}"></h1>
+            <input type="hidden" th:field="*{id}">
+
+            <label>Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required/>
+
+            <label>Apellido Paterno:</label>
+            <input type="text" id="apellido_paterno" th:field="*{apellido_paterno}" required/>
+
+            <label>Apellido Materno:</label>
+            <input type="text" id="apellido_materno" th:field="*{apellido_materno}" required/>
+
+            <label>Numero de Documento:</label>
+            <input type="text" id="numero_documento" th:field="*{numero_documento}" required/>
+
+            <label>Fecha de Nacimiento:</label>
+            <input type="date" id="fecha_nacimiento" th:field="*{fecha_nacimiento}"  required/>
+
+            <label>Dirección:</label>
+            <input type="text" id="direccion" th:field="*{direccion}" required/>
+
+            <label>Meses Trabajados:</label>
+            <input type="number" id="meses_trabajados" th:field="*{meses_trabajados}" required/>
+
+            <label>Tipo de Seguro:</label>
+            <select id="tipo_seguro" name="tipo_seguro" th:field="*{tipo_seguro}" required>
+                <option value="">Seleccione un tipo de seguro</option>
+                <option value="ESSALUD">ESSALUD</option>
+                <option value="EPS">EPS</option>
+            </select>
+
+            <label>Sueldo:</label>
+            <input type="number" id="sueldo" th:field="*{sueldo}" step="0.01" min="0" required/>
+            <p th:if="${#fields.hasErrors('sueldo')}" th:errors="*{sueldo}" style="color: red;"></p>
+            <label>Telefono:</label>
+            <input type="text" id="Telefono" th:field="*{Telefono}" required/>
+
+            <div class="button-group">
+                <button type="submit">Guardar</button>
+                <button type="reset">Reset</button>
+                <button type="button" onclick="window.location.href = '/empleados';">Volver</button>
+            </div>
+        </form>
+    </body>
+</html>
